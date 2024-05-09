@@ -91,6 +91,13 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 3.h),
             InkWell(
               onTap: () {
+                setState(() {
+                  _currentLoanValue =
+                      double.tryParse(_loanController.text) ?? 100000;
+                  _currentYearsValue = int.tryParse(_yearsController.text) ?? 1;
+                  _currentInterestValue =
+                      double.tryParse(_interestController.text) ?? 0.5;
+                });
                 context.read<LoanBloc>().add(CalculateEmiEvent(
                       interestRate: _currentInterestValue,
                       tenure: _currentYearsValue,
