@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loan_emi/bloc/loan_bloc.dart';
+import 'package:loan_emi/presentation/widgets/custom_button.dart';
 import 'package:loan_emi/presentation/widgets/value_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -89,39 +90,20 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             SizedBox(height: 3.h),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _currentLoanValue =
-                      double.tryParse(_loanController.text) ?? 100000;
-                  _currentYearsValue = int.tryParse(_yearsController.text) ?? 1;
-                  _currentInterestValue =
-                      double.tryParse(_interestController.text) ?? 0.5;
-                });
-                context.read<LoanBloc>().add(CalculateEmiEvent(
-                      interestRate: _currentInterestValue,
-                      tenure: _currentYearsValue,
-                      principal: _currentLoanValue,
-                    ));
-              },
-              child: Container(
-                height: 6.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2.w),
-                  color: Colors.brown,
-                ),
-                child: const Center(
-                  child: Text(
-                    'Calculate EMI',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            CustomButton(ontap: () {
+              setState(() {
+                _currentLoanValue =
+                    double.tryParse(_loanController.text) ?? 100000;
+                _currentYearsValue = int.tryParse(_yearsController.text) ?? 1;
+                _currentInterestValue =
+                    double.tryParse(_interestController.text) ?? 0.5;
+              });
+              context.read<LoanBloc>().add(CalculateEmiEvent(
+                    interestRate: _currentInterestValue,
+                    tenure: _currentYearsValue,
+                    principal: _currentLoanValue,
+                  ));
+            }),
             SizedBox(height: 4.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
